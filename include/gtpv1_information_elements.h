@@ -1,0 +1,162 @@
+/************************************************************************
+ * COPYRIGHT (C) Ericsson 2012                                           *
+ * The copyright to the computer program(s) herein is the property       *
+ * of Telefonaktiebolaget LM Ericsson.                                   *
+ * The program(s) may be used and/or copied only with the written        *
+ * permission from Telefonaktiebolaget LM Ericsson or in accordance with *
+ * the terms and conditions stipulated in the agreement/contract         *
+ * under which the program(s) have been supplied.                        *
+ *************************************************************************
+ *************************************************************************
+ * File: gtpv1_information_elements.h
+ * Date: Mar 18, 2012
+ * Author: LMI/LXR/SH Liam Fallon
+ ************************************************************************/
+
+/**
+ * This module manages GTP V1 information elements
+ */
+
+#ifndef GTPV1_INFORMATION_ELEMENTS_H_
+#define GTPV1_INFORMATION_ELEMENTS_H_
+
+#include <stdio.h>
+
+//
+// Constants
+#define MAX_GTPV1_INFORMATION_ELEMENTS 256
+
+#define GTPV1_FIRST_TLV_IE 128
+
+// A GTP V1 information element holder
+struct gtpv1_information_element {
+	int id;
+	int grouped;
+	int header_length;
+	int body_length;
+	char name[BUFSIZ];
+};
+
+// All GTP V1 information elements
+extern struct gtpv1_information_element gtpv1_information_elements[MAX_GTPV1_INFORMATION_ELEMENTS];
+
+//
+// This function initializes static data for GTP V1 messages
+//
+void init_gtpv1_information_elements();
+
+// Declare all GTP V1 information elements
+#define GTPV1_IE_CAUSE 1
+#define GTPV1_IE_IMSI 2
+#define GTPV1_IE_RAI 3
+#define GTPV1_IE_TLLI 4
+#define GTPV1_IE_P_TMSI 5
+#define GTPV1_IE_REORDERING_REQUIRED 8
+#define GTPV1_IE_AUTHENTICATION_TRIPLET 9
+#define GTPV1_IE_MAP_CAUSE 11
+#define GTPV1_IE_P_TMSI_SIGNATURE 12
+#define GTPV1_IE_MS_VALIDATED 13
+#define GTPV1_IE_RECOVERY 14
+#define GTPV1_IE_SELECTION_MODE 15
+#define GTPV1_IE_TEI_DATA_I 16
+#define GTPV1_IE_TEI_CONTROL_PLANE 17
+#define GTPV1_IE_TEI_DATA_II 18
+#define GTPV1_IE_TEARDOWN_IND 19
+#define GTPV1_IE_NSAPI 20
+#define GTPV1_IE_RANAP_CAUSE 21
+#define GTPV1_IE_RAB_CONTEXT 22
+#define GTPV1_IE_RADIO_PRIORITY_SMS 23
+#define GTPV1_IE_RADIO_PRIORITY 24
+#define GTPV1_IE_PACKET_FLOW_ID 25
+#define GTPV1_IE_CHARGING_CHARACTERISTICS 26
+#define GTPV1_IE_TRACE_REFERENCE 27
+#define GTPV1_IE_TRACE_TYPE 28
+#define GTPV1_IE_MS_NOT_REACHABLE_REASON 29
+#define GTPV1_IE_CHARGING_ID 127
+#define GTPV1_IE_END_USER_ADDRESS 128
+#define GTPV1_IE_MM_CONTEXT 129
+#define GTPV1_IE_PDP_CONTEXT 130
+#define GTPV1_IE_APN 131
+#define GTPV1_IE_PROTOCOL_CONFIGURATION_OPTIONS 132
+#define GTPV1_IE_GSN_ADDRESS 133
+#define GTPV1_IE_MSISDN 134
+#define GTPV1_IE_QOS_PROFILE 135
+#define GTPV1_IE_AUTHENTICATION_QUINTUPLET 136
+#define GTPV1_IE_TRAFFIC_FLOW_TEMPLATE 137
+#define GTPV1_IE_TARGET_IDENTIFICATION 138
+#define GTPV1_IE_UTRAN_TRANSPARENT_CONTAINER 139
+#define GTPV1_IE_RAB_SETUP_INFORMATION 140
+#define GTPV1_IE_EXTENSION_HEADER_TYPE_LIST 141
+#define GTPV1_IE_TRIGGER_ID 142
+#define GTPV1_IE_OMC_IDENTITY 143
+#define GTPV1_IE_RAN_TRANSPARENT_CONTAINER 144
+#define GTPV1_IE_PDP_CONTEXT_PRIORITIZATION 145
+#define GTPV1_IE_ADDITIONAL_RAB_SETUP_INFORMATION 146
+#define GTPV1_IE_SGSN_NUMBER 147
+#define GTPV1_IE_COMMON_FLAGS 148
+#define GTPV1_IE_APN_RESTRICTION 149
+#define GTPV1_IE_RADIO_PRIORITY_LCS 150
+#define GTPV1_IE_RAT_TYPE 151
+#define GTPV1_IE_USER_LOCATION_INFORMATION 152
+#define GTPV1_IE_MS_TIME_ZONE 153
+#define GTPV1_IE_IMEISV 154
+#define GTPV1_IE_CAMEL_CHARGING_INFORMATION_CONTAINER 155
+#define GTPV1_IE_MBMS_UE_CONTEXT 156
+#define GTPV1_IE_TMGI 157
+#define GTPV1_IE_RIM_ROUTING_ADDRESS 158
+#define GTPV1_IE_MBMS_PROTOCOL_CONFIGURATION_OPTIONS 159
+#define GTPV1_IE_MBMS_SERVICE_AREA 160
+#define GTPV1_IE_SOURCE_RNC_PDCP_CONTEXT_INFO 161
+#define GTPV1_IE_ADDITIONAL_TRACE_INFO 162
+#define GTPV1_IE_HOP_COUNTER 163
+#define GTPV1_IE_SELECTED_PLMN_ID 164
+#define GTPV1_IE_MBMS_SESSION_IDENTIFIER 165
+#define GTPV1_IE_MBMS_2G_3G_INDICATOR 166
+#define GTPV1_IE_ENHANCED_NSAPI 167
+#define GTPV1_IE_MBMS_SESSION_DURATION 168
+#define GTPV1_IE_ADDITIONAL_MBMS_TRACE_INFO 169
+#define GTPV1_IE_MBMS_SESSION_REPETITION_NUMBER 170
+#define GTPV1_IE_MBMS_TIME_TO_DATA_TRANSFER 171
+#define GTPV1_IE_BSS_CONTAINER 173
+#define GTPV1_IE_CELL_IDENTIFICATION 174
+#define GTPV1_IE_PDU_NUMBERS 175
+#define GTPV1_IE_BSSGP_CAUSE 176
+#define GTPV1_IE_REQUIRED_MBMS_BEARER_CAPABILITIES 177
+#define GTPV1_IE_RIM_ROUTING_ADDRESS_DISCRIMINATOR 178
+#define GTPV1_IE_LIST_OF_SET_UP_PFCS 179
+#define GTPV1_IE_PS_HANDOVER_XID_PARAMETERS 180
+#define GTPV1_IE_MS_INFO_CHANGE_REPORTING_ACTION 181
+#define GTPV1_IE_DIRECT_TUNNEL_FLAGS 182
+#define GTPV1_IE_CORRELATION_ID 183
+#define GTPV1_IE_BEARER_CONTROL_MODE 184
+#define GTPV1_IE_MBMS_FLOW_IDENTIFIER 185
+#define GTPV1_IE_MBMS_IP_MULTICAST_DISTRIBUTION 186
+#define GTPV1_IE_MBMS_DISTRIBUTION_ACKNOWLEDGEMENT 187
+#define GTPV1_IE_RELIABLE_INTER_RAT_HANDOVER_INFO  188
+#define GTPV1_IE_RFSP_INDEX 189
+#define GTPV1_IE_FQDN 190
+#define GTPV1_IE_EVOLVED_ALLOCATION_RETENTION_PRIORITY_I 191
+#define GTPV1_IE_EVOLVED_ALLOCATION_RETENTION_PRIORITY_II 192
+#define GTPV1_IE_EXTENDED_COMMON_FLAGS 193
+#define GTPV1_IE_UCI 194
+#define GTPV1_IE_CSG_INFORMATION_REPORTING_ACTION 195
+#define GTPV1_IE_CSG_ID 196
+#define GTPV1_IE_CMI 197
+#define GTPV1_IE_AMBR 198
+#define GTPV1_IE_UE_NETWORK_CAPABILITY 199
+#define GTPV1_IE_UE_AMBR 200
+#define GTPV1_IE_APN_AMBR_WITH_NSAPI 201
+#define GTPV1_IE_GGSN_BACK_OFF_TIME 202
+#define GTPV1_IE_SIGNALLING_PRIORITY_INDICATION 203
+#define GTPV1_IE_SIGNALLING_PRIORITY_INDICATION_WITH_NSAPI 204
+#define GTPV1_IE_HIGHER_BITRATES_THAN_16_MBPS_FLAG 205
+#define GTPV1_IE_MAX_MBR_APN_AMBR 206
+#define GTPV1_IE_ADDITIONAL_MM_CONTEXT_FOR_SRVCC 207
+#define GTPV1_IE_ADDITIONAL_FLAGS_FOR_SRVCC 208
+#define GTPV1_IE_STN_SR 209
+#define GTPV1_IE_C_MSISDN 210
+#define GTPV1_IE_EXTENDED_RANAP_CAUSE 211
+#define GTPV1_IE_CHARGING_GATEWAY_ADDRESS 251
+#define GTPV1_IE_PRIVATE_EXTENSION 255
+
+#endif /* GTPV1_INFORMATION_ELEMENTS_H_ */

@@ -1,0 +1,8 @@
+[
+	{
+		"live":"0",
+		"capture_location":"/opt/tmp/cap",
+		"port":"22222",
+		"file_capture_iterations":"-1",
+	} 
+]

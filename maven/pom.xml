@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.ericsson.pcp</groupId>
+  <artifactId>distributor-merger</artifactId>
+  <packaging>pom</packaging>
+  <version>1.0.1-SNAPSHOT</version>
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-nar-plugin</artifactId>
+          <version>2.2.1</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+  <modules>
+<!-- These are not needed for our customers
+    <module>chunkpcapfile</module>
+    <module>decodegtp</module>
+    <module>gtpaddr</module>
+    <module>gtpimsieua</module>
+    <module>pcapfilestats</module>
+    <module>usecstamp</module>
+    <module>gtpuntunnel</module> -->
+    <module>pcapdistributor</module>
+    <module>pcapmerger</module>
+  </modules>
+</project>

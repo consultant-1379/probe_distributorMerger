@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>distributor-merger</artifactId>
+    <groupId>com.ericsson.pcp</groupId>
+    <version>1.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>ERICdistributor-merger-CXC1734794</artifactId>
+  <name>PCP Distributor Merger - RPM</name>
+  <packaging>rpm</packaging>
+  <properties>
+    <base.path>${basedir}</base.path>
+    <install.dir>/opt/ericsson/distributorMerger</install.dir>
+    <name>distributorMerger</name>
+    <versioned.install.dir>${install.dir}/distributorMerger-${project.version}</versioned.install.dir>
+    <copyright>Ericsson AB 2012 - All rights reserved</copyright>
+    <url>http://www.ericsson.com</url>
+    <vendor>Ericsson</vendor>
+    <packager>LMI Ericsson</packager>
+    <prefix>/opt/ericsson/distributorMerger</prefix>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>com.ericsson.pcp</groupId>
+      <artifactId>pcap-distributor</artifactId>
+      <version>${project.version}</version>
+      <type>nar</type>
+    </dependency>
+    <dependency>
+      <groupId>com.ericsson.pcp</groupId>
+      <artifactId>pcapmerger</artifactId>
+      <version>${project.version}</version>
+      <type>nar</type>
+    </dependency>
+  </dependencies>
+  <description>A package containing two modules, a distributor, and a merger.
+The distributor module sends a copy of the input stream out to each of it's merger modules.
+The merger module passes the output from the distributor module to the binary it is connected to.</description>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-nar-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>unpack-nars</id>
+            <phase>process-sources</phase>
+            <goals>
+              <goal>nar-unpack</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>rpm-maven-plugin</artifactId>
+        <version>2.1-alpha-1</version>
+        <extensions>true</extensions>
+        <configuration>
+			<autoRequires>false</autoRequires>
+		  <skip>true</skip>
+          <inherited>true</inherited>
+          <copyright>2012 Ericsson AB All rights reserved</copyright>
+          <release>${rstate}</release>
+          <group>Prototype and Customer Trials</group>
+          <vendor>Ericsson</vendor>
+          <url>www.ericsson.com</url>
+          <needarch>x86_64</needarch>
+          <mappings>
+            <mapping>
+              <directory>/opt</directory>
+              <filemode>700</filemode>
+              <username>pcpuser</username>
+              <groupname>dc5000</groupname>
+            </mapping>
+            <mapping>
+              <directory>/opt/ericsson</directory>
+              <filemode>700</filemode>
+              <username>pcpuser</username>
+              <groupname>dc5000</groupname>
+            </mapping>
+            <mapping>
+              <directory>${install.dir}</directory>
+              <filemode>700</filemode>
+              <username>pcpuser</username>
+              <groupname>dc5000</groupname>
+            </mapping>
+            <mapping>
+              <directory>${versioned.install.dir}</directory>
+              <filemode>700</filemode>
+              <username>pcpuser</username>
+              <groupname>dc5000</groupname>
+            </mapping>
+            <mapping>
+              <directory>${versioned.install.dir}/bin</directory>
+              <filemode>700</filemode>
+              <username>pcpuser</username>
+              <groupname>dc5000</groupname>
+            </mapping>
+            <mapping>
+              <directory>${versioned.install.dir}/bin</directory>
+              <filemode>700</filemode>
+              <username>pcpuser</username>
+              <groupname>dc5000</groupname>
+              <directoryIncluded>true</directoryIncluded>
+              <recurseDirectories>true</recurseDirectories>
+              <sources>
+                <source>
+                  <location>target/nar/pcapmerger-${project.version}-amd64-Linux-gpp-executable/bin/amd64-Linux-gpp/pcapmerger</location>
+                </source>
+                <source>
+                  <location>target/nar/pcap-distributor-${project.version}-amd64-Linux-gpp-executable/bin/amd64-Linux-gpp/pcap-distributor</location>
+                </source>
+              </sources>
+            </mapping>
+            <mapping>
+              <directory>${versioned.install.dir}/etc</directory>
+              <filemode>700</filemode>
+              <username>pcpuser</username>
+              <groupname>dc5000</groupname>
+            </mapping>
+            <mapping>
+              <directory>${versioned.install.dir}/etc</directory>
+              <filemode>700</filemode>
+              <username>pcpuser</username>
+              <groupname>dc5000</groupname>
+              <directoryIncluded>true</directoryIncluded>
+              <recurseDirectories>true</recurseDirectories>
+              <sources>
+                <source>
+                  <location>${base.path}/../../etc/</location>
+                </source>
+              </sources>
+            </mapping>
+          </mappings>
+          
+         <preinstallScriptlet>
+            <script>echo "installing ERICdistributorMerger component now"
+            
+		# check if pcpuser and dcuser exist. if not the installation will end.
+
+		if_user_exist()
+		{
+		if [ -z "$(getent passwd $1)" ] ; then
+			echo "user $1 does not exist, installation will be aborted"
+			exit 1
+		else
+			echo "checking user $1. Done."
+		fi
+		}
+
+		if_user_exist pcpuser
+
+            
+            
+            </script>
+         </preinstallScriptlet>
+	<postinstallScriptlet>
+           <script>
+                # Check if a soft link for latest version of probe-controller already exists
+		if [ -L "/opt/ericsson/distributorMerger/distributorMerger" ]; then
+			rm /opt/ericsson/distributorMerger/distributorMerger
+		fi
+		
+		ln -s  ${versioned.install.dir} /opt/ericsson/distributorMerger/distributorMerger 
+                 </script>
+        </postinstallScriptlet>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

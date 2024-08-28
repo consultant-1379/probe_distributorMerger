@@ -1,0 +1,8 @@
+[
+	{
+		"untunnel_gtp":"1",
+		"output_path":"/var/opt/ericsson/eniq-analysis/merged.pcap",
+		"distribution_server_array": [
+		]
+	}
+]

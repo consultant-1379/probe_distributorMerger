@@ -1,0 +1,2 @@
+[{"some":"rubbish"},
+{"read_mode":"0","capture_location":"eth0","port":"3000","server_arr":[{"host":"192.168.122.222"},{"host":"192.168.122.223"}], "server_elem_size":"30"}]
